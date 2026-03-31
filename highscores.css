@@ -9,6 +9,13 @@
   margin-bottom: 0.5rem;
 }
 
+.high-score-current {
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 0.4rem;
+  padding: 0.3rem 0.8rem;
+}
+
 .high-score:hover {
   transform: scale(1.025);
 }

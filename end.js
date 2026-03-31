@@ -19,6 +19,7 @@ saveHighScore = async (e) => {
         name: username.value.trim(),
         score: Number(mostRecentScore || 0),
     };
+    localStorage.setItem('latestUsername', payload.name);
 
     try {
         await fetch(API_URL, {
