@@ -2,6 +2,7 @@ const highScoresList = document.getElementById('highScoresList');
 const API_URL =
     'https://script.google.com/macros/s/AKfycbxS1z5TIrv6APo2UK13w-NZbhqZap0fTDMjIikBjGji7aihetLtnePLYK_RMm_0_u9ufA/exec';
 const latestUsername = (localStorage.getItem('latestUsername') || '').trim().toLowerCase();
+const latestScore = Number(localStorage.getItem('latestScore') || NaN);
 
 const loadScores = async () => {
     try {
@@ -21,7 +22,11 @@ const loadScores = async () => {
             item.className = 'high-score';
             item.textContent = `${score.name} - ${score.score}`;
 
-            if (String(score.name || '').trim().toLowerCase() === latestUsername) {
+            const isSameUser =
+                String(score.name || '').trim().toLowerCase() === latestUsername;
+            const isSameScore = Number(score.score) === latestScore;
+
+            if (isSameUser && isSameScore) {
                 item.classList.add('high-score-current');
             }
 

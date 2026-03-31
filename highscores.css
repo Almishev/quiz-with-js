@@ -10,10 +10,11 @@
 }
 
 .high-score-current {
+  display: block;
   background-color: #28a745;
   color: #fff;
   border-radius: 0.4rem;
-  padding: 0.3rem 0.8rem;
+  padding: 0.5rem 0.8rem;
 }
 
 .high-score:hover {
