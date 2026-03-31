@@ -60,7 +60,7 @@ getNewQuestion = () => {
     }
 
     questionCounter++;
-    progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
+    progressText.innerText = `Въпрос ${questionCounter}/${MAX_QUESTIONS}`;
 
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
 

@@ -3,27 +3,32 @@ const saveScoreBtn = document.getElementById('saveScoreBtn');
 const finalScore = document.getElementById('finalScore');
 const mostRecentScore = localStorage.getItem('mostRecentScore');
 
-const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+const API_URL =
+    'https://script.google.com/macros/s/AKfycbxS1z5TIrv6APo2UK13w-NZbhqZap0fTDMjIikBjGji7aihetLtnePLYK_RMm_0_u9ufA/exec';
 
-const MAX_HIGH_SCORES = 5;
-
-finalScore.innerText = mostRecentScore;
+finalScore.innerText = mostRecentScore || 0;
 
 username.addEventListener('keyup', () => {
-    saveScoreBtn.disabled = !username.value;
+    saveScoreBtn.disabled = !username.value.trim();
 });
 
-saveHighScore = (e) => {
+saveHighScore = async (e) => {
     e.preventDefault();
 
-    const score = {
-        score: mostRecentScore,
-        name: username.value,
+    const payload = {
+        name: username.value.trim(),
+        score: Number(mostRecentScore || 0),
     };
-    highScores.push(score);
-    highScores.sort((a, b) => b.score - a.score);
-    highScores.splice(5);
 
-    localStorage.setItem('highScores', JSON.stringify(highScores));
+    try {
+        await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+    } catch (err) {
+        console.error('Грешка при запис на резултат:', err);
+    }
+
     window.location.assign('./index.html');
 };
