@@ -124,3 +124,10 @@ input {
 input::placeholder {
   color: #aaa;
 }
+
+/* MOBILE SPACING */
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 1.6rem;
+  }
+}
