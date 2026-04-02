@@ -2,9 +2,12 @@
   display: flex;
   margin-bottom: 0.5rem;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   font-size: 1.8rem;
   border: 0.1rem solid rgb(86, 165, 235, 0.25);
   background-color: white;
+  box-sizing: border-box;
 }
 
 .choice-container:hover {
@@ -23,6 +26,9 @@
 .choice-text {
   padding: 1.5rem;
   width: 100%;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .correct {
@@ -78,5 +84,31 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .choice-prefix {
+    padding: 1.2rem 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .choice-text {
+    padding: 1.2rem 1rem;
+    font-size: 1.6rem;
+  }
+
+  .choice-container {
+    font-size: 1.6rem;
+  }
+
+  #progressBar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hud-prefix {
+    font-size: 1.6rem;
   }
 }

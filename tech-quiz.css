@@ -1,11 +1,20 @@
 /* Допълнения само за анкетата — не дублираме глобалните reset-и от app.css */
 
+#game {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
 #hud {
   justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
 }
 
 #hud-item {
   width: 100%;
+  min-width: 0;
 }
 
 .survey-dynamic {
@@ -49,4 +58,32 @@
 .survey-multi-row label {
   cursor: pointer;
   flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .survey-multi-row,
+  .survey-radio-row {
+    font-size: 1.6rem;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .survey-multi-row input[type='checkbox'],
+  .survey-radio-row input[type='radio'] {
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .survey-error {
+    font-size: 1.6rem;
+    line-height: 1.35;
+  }
+
+  .survey-dynamic .btn {
+    width: 100%;
+    max-width: 100%;
+  }
 }
