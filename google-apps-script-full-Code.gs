@@ -69,19 +69,30 @@ function saveSurveyResponse_(payload) {
       'q3',
       'q4',
       'q5',
+      'q6',
+      'q7',
       'answers_json',
     ]);
+  }
+
+  function cell_(v) {
+    if (v == null || v === '') return '';
+    if (Array.isArray(v)) return v.join(', ');
+    if (typeof v === 'object') return JSON.stringify(v);
+    return v;
   }
 
   sheet.appendRow([
     new Date().toISOString(),
     String(payload.respondentId || ''),
     String(payload.sample || ''),
-    answers.q1 != null ? answers.q1 : '',
-    answers.q2 != null ? answers.q2 : '',
-    answers.q3 != null ? answers.q3 : '',
-    answers.q4 != null ? answers.q4 : '',
-    answers.q5 != null ? answers.q5 : '',
+    cell_(answers.q1),
+    cell_(answers.q2),
+    cell_(answers.q3),
+    cell_(answers.q4),
+    cell_(answers.q5),
+    cell_(answers.q6),
+    cell_(answers.q7),
     JSON.stringify(answers),
   ]);
 

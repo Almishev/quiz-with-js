@@ -19,7 +19,7 @@ const homeLink = document.getElementById('homeLink');
 let questions = [];
 let currentIndex = 0;
 
-/** @type {Record<number, string | number>} */
+/** @type {Record<number, string | number | string[]>} */
 const answers = {};
 
 let acceptingChoice = true;
@@ -51,8 +51,14 @@ function clearError() {
 /** Видим ли е въпросът при текущите (частични) отговори? */
 function isQuestionVisible(q, ans) {
     if (!q.showIf) return true;
+
     const prev = ans[q.showIf.questionId];
     if (prev === undefined) return false;
+
+    if (Array.isArray(q.showIf.value)) {
+        return q.showIf.value.includes(String(prev));
+    }
+
     return String(prev) === String(q.showIf.value);
 }
 
@@ -66,12 +72,13 @@ function advanceToNextVisible() {
 }
 
 /**
- * Общ брой екрана в анкетата се определя след отговор на въпрос 2:
- * с React → 5, без (или без react) → 4
+ * След отговор на Q1: ако е tried/own_pair → показваме Q2 → 7 стъпки, иначе 6.
  */
 function getTotalStepsLabel() {
-    if (answers[2] === undefined) return null;
-    return String(answers[2]) === 'react' ? 5 : 4;
+    const a1 = answers[1];
+    if (a1 === undefined) return null;
+    const showComfort = ['tried', 'own_pair'].includes(String(a1));
+    return showComfort ? 7 : 6;
 }
 
 /** Номер на текущата стъпка (1-based) за прогреса */
@@ -109,12 +116,55 @@ function setChoiceUiVisible(visible) {
     });
 }
 
+function renderSingleQuestionMany(q) {
+    clearDynamicUi();
+    setChoiceUiVisible(false);
+    questionEl.textContent = q.question;
+
+    const list = q.choices || [];
+    list.forEach((opt, idx) => {
+        const row = document.createElement('div');
+        row.className = 'survey-radio-row';
+
+        const inputId = `single-q${q.id}-${idx}`;
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `single-q${q.id}`;
+        radio.id = inputId;
+        radio.value = opt.value;
+
+        const label = document.createElement('label');
+        label.htmlFor = inputId;
+        label.textContent = opt.label;
+
+        radio.addEventListener('change', () => {
+            if (!radio.checked || submitted) return;
+            clearError();
+            answers[q.id] = opt.value;
+            currentIndex += 1;
+            advanceToNextVisible();
+            renderCurrentQuestion();
+        });
+
+        row.appendChild(radio);
+        row.appendChild(label);
+        dynamicArea.appendChild(row);
+    });
+
+    dynamicArea.hidden = false;
+}
+
 function renderSingleQuestion(q) {
+    const list = q.choices || [];
+    if (list.length > choiceTexts.length) {
+        renderSingleQuestionMany(q);
+        return;
+    }
+
     clearDynamicUi();
     setChoiceUiVisible(true);
     questionEl.textContent = q.question;
 
-    const list = q.choices || [];
     choiceTexts.forEach((el, i) => {
         const opt = list[i];
         const row = choiceSlots[i];
@@ -201,6 +251,8 @@ function renderCurrentQuestion() {
 
     if (q.type === 'single') {
         renderSingleQuestion(q);
+    } else if (q.type === 'multi') {
+        renderMultiQuestion(q);
     } else {
         renderInputQuestion(q);
     }
@@ -287,6 +339,70 @@ choiceTexts.forEach((el) => {
         renderCurrentQuestion();
     });
 });
+
+function renderMultiQuestion(q) {
+    clearDynamicUi();
+    setChoiceUiVisible(false);
+    questionEl.textContent = q.question;
+
+    const selectedValues = new Set(
+        Array.isArray(answers[q.id]) ? answers[q.id].map(String) : []
+    );
+
+    q.choices.forEach((choice, idx) => {
+        const row = document.createElement('div');
+        row.className = 'survey-multi-row';
+
+        const cbId = `multi-q${q.id}-${choice.value}-${idx}`;
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = cbId;
+        checkbox.value = choice.value;
+        checkbox.checked = selectedValues.has(choice.value);
+
+        const label = document.createElement('label');
+        label.htmlFor = cbId;
+        label.textContent = choice.label;
+
+        if (checkbox.checked) row.classList.add('survey-multi-row--selected');
+
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                selectedValues.add(choice.value);
+            } else {
+                selectedValues.delete(choice.value);
+            }
+            row.classList.toggle('survey-multi-row--selected', checkbox.checked);
+        });
+
+        row.appendChild(checkbox);
+        row.appendChild(label);
+        dynamicArea.appendChild(row);
+    });
+
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.textContent = 'Напред';
+    nextBtn.className = 'btn';
+
+    nextBtn.addEventListener('click', () => {
+        clearError();
+
+        if (selectedValues.size === 0 && !q.optional) {
+            showError('Моля, изберете поне една опция.');
+            return;
+        }
+
+        answers[q.id] = Array.from(selectedValues);
+
+        currentIndex += 1;
+        advanceToNextVisible();
+        renderCurrentQuestion();
+    });
+
+    dynamicArea.appendChild(nextBtn);
+    dynamicArea.hidden = false;
+}
 
 function init() {
     homeLink.style.display = 'none';

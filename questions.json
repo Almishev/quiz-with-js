@@ -1,49 +1,85 @@
 [
-  {
-    "id": 1,
-    "type": "single",
-    "question": "Какъв е вашият опит?",
-    "choices": [
-      { "value": "beginner", "label": "Начинаещ" },
-      { "value": "intermediate", "label": "Среден" },
-      { "value": "advanced", "label": "Напреднал" },
-      { "value": "expert", "label": "Експерт" }
-    ]
-  },
-  {
-    "id": 2,
-    "type": "single",
-    "question": "Кой фреймуърк използвате?",
-    "choices": [
-      { "value": "react", "label": "React" },
-      { "value": "vue", "label": "Vue" },
-      { "value": "angular", "label": "Angular" },
-      { "value": "none", "label": "Никой" }
-    ]
-  },
-  {
-    "id": 3,
-    "type": "number",
-    "question": "Колко години ползвате React?",
-    "min": 0,
-    "max": 30,
-    "showIf": { "questionId": 2, "value": "react" }
-  },
-  {
-    "id": 4,
-    "type": "single",
-    "question": "Колко важна е производителността?",
-    "choices": [
-      { "value": "1", "label": "1 – не е важна" },
-      { "value": "2", "label": "2" },
-      { "value": "3", "label": "3" },
-      { "value": "4", "label": "4 – много важна" }
-    ]
-  },
-  {
-    "id": 5,
-    "type": "text",
-    "question": "Допълнителни коментари (по желание)",
-    "optional": true
-  }
-]
+    {
+      "id": 1,
+      "type": "single",
+      "question": "Познавате ли обувки за бягане с много висока междинна подметка (макс. амортизация / „висока платформа“)?",
+      "choices": [
+        { "label": "Не съм чувал", "value": "never_heard" },
+        { "label": "Чувал съм", "value": "heard" },
+        { "label": "Пробвал съм", "value": "tried" },
+        { "label": "Имам чифт", "value": "own_pair" }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "question": "Как оценявате комфорта при по-дълги тренировки?",
+    "showIf": { "questionId": 1, "value": ["tried", "own_pair"] },
+      "choices": [
+        { "label": "1 - Много слаб", "value": "1" },
+        { "label": "2", "value": "2" },
+        { "label": "3", "value": "3" },
+        { "label": "4", "value": "4" },
+        { "label": "5 - Отличен", "value": "5" }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "question": "Ако излезе нов модел с фокус върху комфорт и „висока платформа“, колко вероятно е да го купите в следващите 90 дни?",
+      "choices": [
+        { "label": "Много малко вероятно", "value": "very_unlikely" },
+        { "label": "По-скоро не", "value": "unlikely" },
+        { "label": "Неутрално", "value": "neutral" },
+        { "label": "По-скоро да", "value": "likely" },
+        { "label": "Много вероятно", "value": "very_likely" }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "question": "До кой ценов диапазон бихте разгледали покупка (за 1 чифт)?",
+      "choices": [
+        { "label": "Под 120", "value": "under_120" },
+        { "label": "120 – 180", "value": "120_180" },
+        { "label": "180 – 240", "value": "180_240" },
+        { "label": "Над 240", "value": "240_plus" },
+        { "label": "Не съм сигурен", "value": "not_sure" }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "multi",
+      "question": "Къде най-често откривате нови модели обувки за бягане? (маркиране на всичко подходящо)",
+      "choices": [
+        { "label": "Instagram", "value": "instagram" },
+        { "label": "YouTube", "value": "youtube" },
+        { "label": "TikTok", "value": "tiktok" },
+        { "label": "Магазин за бягане", "value": "running_store" },
+        { "label": "Онлайн магазин", "value": "online_retailer" },
+        { "label": "Приятели / клуб", "value": "friends_club" },
+        { "label": "Списание", "value": "magazine" },
+        { "label": "Друго", "value": "other" }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "single",
+      "question": "Какво ви спира най-много при избор на такъв тип обувка?",
+      "choices": [
+        { "label": "Цена", "value": "price" },
+        { "label": "Тегло", "value": "weight" },
+        { "label": "Стабилност", "value": "stability" },
+        { "label": "Издръжливост", "value": "durability" },
+        { "label": "Дизайн", "value": "style" },
+        { "label": "Удобство / пасване", "value": "fit" },
+        { "label": "Нищо", "value": "none" }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "text",
+      "question": "Какво е най-важното за вас при маратонки с висока платформа?",
+      "optional": true
+    }
+  ]
