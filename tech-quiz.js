@@ -1,6 +1,9 @@
 'use strict';
 
 const QUESTION_URL = './questions.json';
+/** Същият Web App като в game.js / end.js — добави в Apps Script обработка за type: "survey". */
+const API_URL =
+    'https://script.google.com/macros/s/AKfycbxS1z5TIrv6APo2UK13w-NZbhqZap0fTDMjIikBjGji7aihetLtnePLYK_RMm_0_u9ufA/exec';
 
 const questionEl = document.getElementById('question');
 const dynamicArea = document.getElementById('dynamicArea');
@@ -208,7 +211,7 @@ function buildPayload() {
     };
 }
 
-function submitSurvey() {
+async function submitSurvey() {
     if (submitted) return;
     submitted = true;
 
@@ -217,12 +220,38 @@ function submitSurvey() {
     setChoiceUiVisible(false);
 
     const payload = buildPayload();
+    const body = JSON.stringify({ type: 'survey', ...payload });
 
-    questionEl.textContent = 'Благодарим! Анкетата е изпратена.';
     progressBarFull.style.width = '100%';
-    progressText.textContent = 'Готово';
+    progressText.textContent = 'Изпращане…';
+    questionEl.textContent = 'Изпращаме отговорите…';
+    clearError();
 
-    console.info('Survey payload (за интеграция с backend):', payload);
+    try {
+        const res = await fetch(API_URL, {
+            method: 'POST',
+            body: body,
+        });
+        const text = await res.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            throw new Error(text.slice(0, 200) || 'Невалиден отговор от сървъра');
+        }
+        if (!data.ok) {
+            throw new Error(data.error || 'Записът неуспешен');
+        }
+        questionEl.textContent = 'Благодарим! Анкетата е изпратена.';
+        progressText.textContent = 'Готово';
+    } catch (err) {
+        console.error(err);
+        questionEl.textContent =
+            'Анкетата приключи, но записът в таблицата неуспешен. Опитайте отново по-късно.';
+        progressText.textContent = 'Грешка';
+        showError(String(err.message || err));
+        console.info('Локално копие на payload:', payload);
+    }
 
     homeLink.style.display = 'inline-block';
 }
