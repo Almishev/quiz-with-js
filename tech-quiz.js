@@ -5,6 +5,8 @@ const QUESTION_URL = './questions.json';
 const API_URL =
     'https://script.google.com/macros/s/AKfycbxS1z5TIrv6APo2UK13w-NZbhqZap0fTDMjIikBjGji7aihetLtnePLYK_RMm_0_u9ufA/exec';
 
+const loader = document.getElementById('loader');
+const game = document.getElementById('game');
 const questionEl = document.getElementById('question');
 const dynamicArea = document.getElementById('dynamicArea');
 const choiceSlots = Array.from(document.querySelectorAll('[data-choice-slot]'));
@@ -29,6 +31,12 @@ const respondentId =
         : `respondent-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const sampleGroup = Math.random() < 0.5 ? 'A' : 'B';
+
+/** Скрива спинъра и показва съдържанието на анкетата (стилът е в game.css #loader). */
+function revealSurveyUi() {
+    if (game) game.classList.remove('hidden');
+    if (loader) loader.classList.add('hidden');
+}
 
 function showError(message) {
     surveyError.textContent = message;
@@ -294,10 +302,12 @@ function init() {
             }
             questions = data;
             currentIndex = 0;
+            revealSurveyUi();
             renderCurrentQuestion();
         })
         .catch((err) => {
             console.error(err);
+            revealSurveyUi();
             questionEl.textContent =
                 'Неуспешно зареждане на въпросите. Проверете questions.json и сървъра.';
             showError(String(err.message || err));
