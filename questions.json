@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "type": "single",
+    "question": "Какъв е вашият опит?",
+    "choices": [
+      { "value": "beginner", "label": "Начинаещ" },
+      { "value": "intermediate", "label": "Среден" },
+      { "value": "advanced", "label": "Напреднал" },
+      { "value": "expert", "label": "Експерт" }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "single",
+    "question": "Кой фреймуърк използвате?",
+    "choices": [
+      { "value": "react", "label": "React" },
+      { "value": "vue", "label": "Vue" },
+      { "value": "angular", "label": "Angular" },
+      { "value": "none", "label": "Никой" }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "number",
+    "question": "Колко години ползвате React?",
+    "min": 0,
+    "max": 30,
+    "showIf": { "questionId": 2, "value": "react" }
+  },
+  {
+    "id": 4,
+    "type": "single",
+    "question": "Колко важна е производителността?",
+    "choices": [
+      { "value": "1", "label": "1 – не е важна" },
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4 – много важна" }
+    ]
+  },
+  {
+    "id": 5,
+    "type": "text",
+    "question": "Допълнителни коментари (по желание)",
+    "optional": true
+  }
+]
