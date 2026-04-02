@@ -123,19 +123,18 @@ function renderSingleQuestionMany(q) {
 
     const list = q.choices || [];
     list.forEach((opt, idx) => {
-        const row = document.createElement('div');
+        const row = document.createElement('label');
         row.className = 'survey-radio-row';
 
-        const inputId = `single-q${q.id}-${idx}`;
         const radio = document.createElement('input');
         radio.type = 'radio';
         radio.name = `single-q${q.id}`;
-        radio.id = inputId;
+        radio.id = `single-q${q.id}-${idx}`;
         radio.value = opt.value;
 
-        const label = document.createElement('label');
-        label.htmlFor = inputId;
-        label.textContent = opt.label;
+        const text = document.createElement('span');
+        text.className = 'survey-radio-text';
+        text.textContent = opt.label;
 
         radio.addEventListener('change', () => {
             if (!radio.checked || submitted) return;
@@ -147,7 +146,7 @@ function renderSingleQuestionMany(q) {
         });
 
         row.appendChild(radio);
-        row.appendChild(label);
+        row.appendChild(text);
         dynamicArea.appendChild(row);
     });
 
