@@ -1,5 +1,14 @@
 :root {
-  background-color: #ecf5ff;
+  /* Палитра като при coffee loader: янтар + бяло + топъл фон */
+  --color-primary: #efb54a;
+  --color-primary-dark: #d9a030;
+  --color-primary-deep: #7a4e08;
+  --color-page-bg: #fff4e6;
+  --color-surface: #ffffff;
+  --shadow-primary: rgba(239, 181, 74, 0.5);
+  --border-primary-soft: rgba(239, 181, 74, 0.35);
+
+  background-color: var(--color-page-bg);
   font-size: 62.5%;
 }
 
@@ -30,7 +39,7 @@ h4 {
 
 h1 {
   font-size: 5.4rem;
-  color: #56a5eb;
+  color: var(--color-primary-deep);
   margin-bottom: 5rem;
 }
 
@@ -90,22 +99,88 @@ h3 {
   display: none;
 }
 
+/* Coffee cup loader — index, game, tech-quiz */
+.coffee-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  width: auto;
+  max-width: none;
+  height: auto;
+  min-height: 100dvh;
+  border: none;
+  border-radius: 0;
+  background-color: var(--color-primary);
+}
+
+.coffee-loader.hidden {
+  display: none !important;
+}
+
+.coffee-loader .cup {
+  position: relative;
+  top: auto;
+  left: auto;
+  height: 140px;
+  width: 180px;
+  border: 6px solid var(--color-primary);
+  border-radius: 0 0 70px 70px;
+  background-image: url(./coffee.png);
+  box-shadow: 0 0 0 6px white;
+  background-repeat: repeat-x;
+  background-position: 0 140px;
+  animation: coffee-cup-fill 2.5s infinite;
+}
+
+.coffee-loader .handle {
+  height: 70px;
+  width: 40px;
+  background-color: transparent;
+  border: 6px solid white;
+  position: absolute;
+  top: 2px;
+  left: 186px;
+  border-radius: 0 25px 80px 0;
+}
+
+@keyframes coffee-cup-fill {
+  0% {
+    background-position: 0 140px;
+  }
+  20% {
+    background-position: -450px 100px;
+  }
+  40% {
+    background-position: -900px 50px;
+  }
+  80% {
+    background-position: -1350px -40px;
+  }
+  100% {
+    background-position: 0 140px;
+  }
+}
+
 /* BUTTONS */
 .btn {
   font-size: 1.8rem;
   padding: 1rem 0;
   width: 20rem;
   text-align: center;
-  border: 0.1rem solid #56a5eb;
+  border: 0.1rem solid var(--color-primary-dark);
   margin-bottom: 1rem;
   text-decoration: none;
-  color: #56a5eb;
-  background-color: white;
+  color: var(--color-primary-deep);
+  background-color: var(--color-surface);
 }
 
 .btn:hover {
   cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  box-shadow: 0 0.4rem 1.4rem 0 var(--shadow-primary);
   transform: translateY(-0.1rem);
   transition: transform 150ms;
 }
@@ -130,7 +205,7 @@ input {
   padding: 1.5rem;
   font-size: 1.8rem;
   border: none;
-  box-shadow: 0 0.1rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  box-shadow: 0 0.1rem 1.4rem 0 var(--shadow-primary);
 }
 
 input::placeholder {

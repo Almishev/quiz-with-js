@@ -2,7 +2,10 @@ import { dom } from './dom.js';
 
 export function revealSurveyUi() {
     if (dom.game) dom.game.classList.remove('hidden');
-    if (dom.loader) dom.loader.classList.add('hidden');
+    if (dom.loader) {
+        dom.loader.classList.add('hidden');
+        dom.loader.setAttribute('aria-busy', 'false');
+    }
 }
 
 export function showError(message) {

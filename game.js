@@ -40,6 +40,11 @@ fetch(QUESTIONS_URL)
     })
     .catch((err) => {
         console.error(err);
+        loader.classList.add('hidden');
+        loader.setAttribute('aria-busy', 'false');
+        game.classList.remove('hidden');
+        question.innerText =
+            'Неуспешно зареждане на въпросите. Проверете връзката и опитайте отново.';
     });
 
 startGame = () => {
@@ -49,6 +54,7 @@ startGame = () => {
 
     game.classList.remove('hidden');
     loader.classList.add('hidden');
+    loader.setAttribute('aria-busy', 'false');
 
     getNewQuestion();
 };

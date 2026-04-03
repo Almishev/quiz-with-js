@@ -1,4 +1,13 @@
 const highScoresList = document.getElementById('highScoresList');
+const pageLoader = document.getElementById('pageLoader');
+
+function hidePageLoader() {
+    if (pageLoader) {
+        pageLoader.classList.add('hidden');
+        pageLoader.setAttribute('aria-busy', 'false');
+    }
+}
+
 const API_URL =
     'https://script.google.com/macros/s/AKfycbxS1z5TIrv6APo2UK13w-NZbhqZap0fTDMjIikBjGji7aihetLtnePLYK_RMm_0_u9ufA/exec';
 const latestUsername = (localStorage.getItem('latestUsername') || '').trim().toLowerCase();
@@ -35,6 +44,8 @@ const loadScores = async () => {
     } catch (err) {
         console.error('Грешка при зареждане на класацията:', err);
         highScoresList.innerHTML = '<li class="high-score">Няма налични резултати.</li>';
+    } finally {
+        hidePageLoader();
     }
 };
 

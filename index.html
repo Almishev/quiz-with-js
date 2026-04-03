@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    
+    <div id="pageLoader" class="coffee-loader" aria-busy="true" aria-label="Зареждане">
+        <div class="cup">
+            <div class="handle"></div>
+        </div>
+    </div>
     <div class="container">
         <div id="home" class="flex-center flex-column">
             <h1>Потребителско проучване</h1>
@@ -19,5 +23,14 @@
 
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var el = document.getElementById('pageLoader');
+            if (el) {
+                el.classList.add('hidden');
+                el.setAttribute('aria-busy', 'false');
+            }
+        });
+    </script>
 </body>
 </html>

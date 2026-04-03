@@ -1,4 +1,5 @@
 /* Допълнения само за анкетата — не дублираме глобалните reset-и от app.css */
+/* Loader: .coffee-loader в app.css */
 
 #game {
   width: 100%;
@@ -37,7 +38,7 @@
   margin: 0;
   padding: 0;
   box-shadow: none;
-  accent-color: #56a5eb;
+  accent-color: var(--color-primary-dark);
   flex-shrink: 0;
 }
 
@@ -63,8 +64,8 @@
   margin-bottom: 0.5rem;
   font-size: 1.8rem;
   padding: 1.2rem 1rem;
-  border: 0.1rem solid rgba(86, 165, 235, 0.25);
-  background-color: #fff;
+  border: 0.1rem solid var(--border-primary-soft);
+  background-color: var(--color-surface);
 }
 
 .survey-radio-row {
@@ -80,8 +81,8 @@
 }
 
 .survey-multi-row--selected {
-  background-color: rgba(86, 165, 235, 0.12);
-  border-color: #56a5eb;
+  background-color: rgba(239, 181, 74, 0.15);
+  border-color: var(--color-primary-dark);
 }
 
 .survey-radio-text {

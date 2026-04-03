@@ -5,22 +5,22 @@
   max-width: 100%;
   min-width: 0;
   font-size: 1.8rem;
-  border: 0.1rem solid rgb(86, 165, 235, 0.25);
-  background-color: white;
+  border: 0.1rem solid var(--border-primary-soft);
+  background-color: var(--color-surface);
   box-sizing: border-box;
 }
 
 .choice-container:hover {
   cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  box-shadow: 0 0.4rem 1.4rem 0 var(--shadow-primary);
   transform: translateY(-0.1rem);
   transition: transform 150ms;
 }
 
 .choice-prefix {
   padding: 1.5rem 2.5rem;
-  background-color: #56a5eb;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
 }
 
 .choice-text {
@@ -58,34 +58,17 @@
 #progressBar {
   width: 20rem;
   height: 4rem;
-  border: 0.3rem solid #56a5eb;
+  border: 0.3rem solid var(--color-primary-dark);
   margin-top: 1.5rem;
 }
 
 #progressBarFull {
   height: 3.4rem;
-  background-color: #56a5eb;
+  background-color: var(--color-primary);
   width: 0%;
 }
 
-/* LOADER */
-#loader {
-  border: 1.6rem solid white;
-  border-radius: 50%;
-  border-top: 1.6rem solid #56a5eb;
-  width: 12rem;
-  height: 12rem;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+/* Loader: .coffee-loader в app.css */
 
 @media (max-width: 768px) {
   .choice-prefix {
